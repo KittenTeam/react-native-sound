@@ -207,7 +207,10 @@ RCT_EXPORT_METHOD(prepare:(NSString*)fileName
     player.delegate = self;
     player.enableRate = YES;
     [player prepareToPlay];
-    [[self playerPool] setObject:player forKey:key];
+    // 快速音频操作会导致 crash，这里判空处理
+    if ([[self playerPool] objectForKey:key] == nil) {
+      [[self playerPool] setObject:player forKey:key];
+    }
     callback(@[[NSNull null], @{@"duration": @(player.duration),
                                 @"numberOfChannels": @(player.numberOfChannels)}]);
   } else {
