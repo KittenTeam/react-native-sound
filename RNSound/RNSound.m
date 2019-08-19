@@ -59,7 +59,8 @@
 }
 
 -(NSNumber*) keyForPlayer:(nonnull AVAudioPlayer*)player {
-  return [[[self playerPool] allKeysForObject:player] firstObject];
+  NSMutableDictionary *tempPlayerPool = [[NSMutableDictionary alloc] initWithDictionary:[self playerPool]];
+  return [[tempPlayerPool allKeysForObject:player] firstObject];
 }
 
 -(RCTResponseSenderBlock) callbackForKey:(nonnull NSNumber*)key {
